@@ -9,9 +9,9 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
         body {
-            font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -36,6 +36,7 @@
             width: 400px;
             text-align: center;
             margin: 20px 0;
+            animation: fadeIn 1s ease-in-out;
         }
         input, select, button {
             width: 100%;
@@ -60,24 +61,47 @@
         .footer {
             width: 100%;
             text-align: center;
-            background: rgba(0, 0, 0, 0.8);
+            background: linear-gradient(135deg, #000000, #222222);
             color: white;
-            padding: 15px;
-            font-size: 14px;
+            padding: 20px;
+            font-size: 16px;
             margin-top: auto;
-            position: relative;
+            box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.5);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
         }
         .footer a {
             color: yellow;
             text-decoration: none;
             font-weight: bold;
         }
+        .confirmation {
+            display: none;
+            background: #25D366;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            animation: orderPlaced 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes orderPlaced {
+            0% { opacity: 0; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
     </style>
 </head>
 <body>
-    <div class="navbar">SS SEELAN CABS</div>
+    <div class="navbar">🚖 SS SEELAN CABS 🚖</div>
     <div class="container">
         <h2>Book Your Cab</h2>
+        <img src="https://cdn3.iconfinder.com/data/icons/meeting-essentials-colred/48/JD-21-512.png" width="50%" alt="Cab Image">
         <input type="text" id="name" placeholder="Your Name" required>
         <input type="text" id="pickup" placeholder="Pickup Location" required>
         <input type="text" id="destination" placeholder="Destination" required>
@@ -86,38 +110,40 @@
         <select id="carType" required>
             <option value="">Select Car Type</option>
             <option value="4 Seater">4 Seater</option>
+            <option value="5 Seater">5 Seater</option>
             <option value="7 Seater">7 Seater</option>
         </select>
         <button onclick="sendToWhatsApp()">Book Now</button>
+        <div class="confirmation" id="confirmation">🚖 Your Order is Placed! 🚖</div>
     </div>
     <div class="footer">
         <h3>Contact Us</h3>
         <p>Email: <a href="mailto:support@ssseelancabs.com">support@ssseelancabs.com</a></p>
-        <p>Phone: <a href="tel:+918838407765">+91 8838407765</a></p>
+        <p>Phone: <a href="tel:+918838407765">+91 8838407765 </a></p>
         <p>Feedback: <a href="mailto:feedback@ssseelancabs.com">Send Feedback</a></p>
     </div>
     <script>
         function sendToWhatsApp() {
-            let name = document.getElementById('name').value;
-            let pickup = document.getElementById('pickup').value;
-            let destination = document.getElementById('destination').value;
-            let datetime = document.getElementById('datetime').value;
-            let phone = document.getElementById('phone').value;
-            let carType = document.getElementById('carType').value;
-            
+            let name = document.getElementById('name').value.trim();
+            let pickup = document.getElementById('pickup').value.trim();
+            let destination = document.getElementById('destination').value.trim();
+            let datetime = document.getElementById('datetime').value.trim();
+            let phone = document.getElementById('phone').value.trim();
+            let carType = document.getElementById('carType').value.trim();
+
             if (name && pickup && destination && datetime && phone && carType) {
-                let message = `*Cab Booking Details*%0A%0A` +
-                    `*Name:* ${name}%0A` +
-                    `*Pickup:* ${pickup}%0A` +
+                let message =` *Name:* ${name}, *Date:*${datetime},Car:${carType}%0A` +
+                    `*Pickup :* ${pickup}%0A` +
                     `*Destination:* ${destination}%0A` +
-                    `*Date & Time:* ${datetime}%0A` +
-                    `*Phone:* ${phone}%0A` +
-                    `*Car Type:* ${carType}`;
-                
+                    `*Phone Number:* ${phone}%0A`
+
                 let whatsappUrl = `https://wa.me/918838407765?text=${message}`;
                 window.open(whatsappUrl, '_blank');
+                
+                // Show confirmation message
+                document.getElementById('confirmation').style.display = 'block';
             } else {
-                alert('Please fill all fields.');
+                alert('⚠️ Please fill in all fields before booking.');
             }
         }
     </script>
