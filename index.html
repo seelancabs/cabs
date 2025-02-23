@@ -1,12 +1,125 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>GTSivam</title>
-    <link rel="stylesheet" href="index.css" />
-  </head>
-  <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cab Booking - SS SEELAN CABS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background: url('https://source.unsplash.com/1600x900/?taxi,cab') no-repeat center center/cover;
+        }
+        .navbar {
+            width: 100%;
+            background: #222;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        input, select, button {
+            width: 100%;
+            margin: 12px 0;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            background: #25D366;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #1DA851;
+            transform: scale(1.05);
+        }
+        .footer {
+            width: 100%;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            font-size: 14px;
+            margin-top: auto;
+            position: relative;
+        }
+        .footer a {
+            color: yellow;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">SS SEELAN CABS</div>
+    <div class="container">
+        <h2>Book Your Cab</h2>
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="text" id="pickup" placeholder="Pickup Location" required>
+        <input type="text" id="destination" placeholder="Destination" required>
+        <input type="datetime-local" id="datetime" required>
+        <input type="tel" id="phone" placeholder="Phone Number" required>
+        <select id="carType" required>
+            <option value="">Select Car Type</option>
+            <option value="4 Seater">4 Seater</option>
+            <option value="7 Seater">7 Seater</option>
+        </select>
+        <button onclick="sendToWhatsApp()">Book Now</button>
+    </div>
+    <div class="footer">
+        <h3>Contact Us</h3>
+        <p>Email: <a href="mailto:support@ssseelancabs.com">support@ssseelancabs.com</a></p>
+        <p>Phone: <a href="tel:+918838407765">+91 8838407765</a></p>
+        <p>Feedback: <a href="mailto:feedback@ssseelancabs.com">Send Feedback</a></p>
+    </div>
+    <script>
+        function sendToWhatsApp() {
+            let name = document.getElementById('name').value;
+            let pickup = document.getElementById('pickup').value;
+            let destination = document.getElementById('destination').value;
+            let datetime = document.getElementById('datetime').value;
+            let phone = document.getElementById('phone').value;
+            let carType = document.getElementById('carType').value;
+            
+            if (name && pickup && destination && datetime && phone && carType) {
+                let message = `*Cab Booking Details*%0A%0A` +
+                    `*Name:* ${name}%0A` +
+                    `*Pickup:* ${pickup}%0A` +
+                    `*Destination:* ${destination}%0A` +
+                    `*Date & Time:* ${datetime}%0A` +
+                    `*Phone:* ${phone}%0A` +
+                    `*Car Type:* ${carType}`;
+                
+                let whatsappUrl = `https://wa.me/918838407765?text=${message}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                alert('Please fill all fields.');
+            }
+        }
+    </script>
+</body>
 </html>
